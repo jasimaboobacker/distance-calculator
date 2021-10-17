@@ -76,6 +76,7 @@ class CalculatorControllerTest {
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(request).andReturn();
         assertEquals(400,result.getResponse().getStatus());
+        System.out.println(result.getResponse().getContentAsString());
 
     }
 
