@@ -22,7 +22,7 @@ public class CalculatorController {
             totalDistance += UnitConverter.convert(distance.getValue(),distance.getUnit(),request.getResultUnit());
         }
 
-        Distance result = new Distance(totalDistance, request.getResultUnit());
+        Distance result = new Distance(Math.round(totalDistance*100.0)/100.0, request.getResultUnit());
         return result;
     }
 
