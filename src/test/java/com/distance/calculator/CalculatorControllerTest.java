@@ -16,14 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @WebMvcTest(CalculatorController.class)
 class CalculatorControllerTest {
 
-    private String reqJsonString;
+    private String successReq;
+    private String errorReq;
 
     @Autowired
     private MockMvc mvc;
 
     @BeforeEach
     void setUp() {
-        reqJsonString = "{\n" +
+        successReq = "{\n" +
                 "  \"distances\": [\n" +
                 "    {\n" +
                 "      \"unit\": \"METER\",\n" +
@@ -36,19 +37,46 @@ class CalculatorControllerTest {
                 "  ],\n" +
                 "  \"resultUnit\": \"METER\"\n" +
                 "}";
+        errorReq = "{\n" +
+                "  \"distances\": [\n" +
+                "    {\n" +
+                "      \"unit\": \"METER\",\n" +
+                "      \"value\": 1\n" +
+                "    },"+
+                "    {\n" +
+                "      \"unit\": \"FEET\",\n" +
+                "      \"value\": 3\n" +
+                "    }"+
+                "  ]\n"+
+                "}";
+
     }
 
     @Test
-    void add() throws Exception {
+    void addSuccess() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders.post("/api/distance-calculator/add")
                 .accept(MediaType.APPLICATION_JSON)
-                .content(reqJsonString)
+                .content(successReq)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(request).andReturn();
         JSONObject resultJson = new JSONObject(result.getResponse().getContentAsString());
         System.out.println(resultJson.get("value"));
+
+        assertEquals(200,result.getResponse().getStatus());
         assertEquals(1.91,resultJson.get("value"));
         assertEquals("METER", resultJson.get("unit"));
 
     }
+
+    @Test
+    void addBadMethod() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders.post("/api/distance-calculator/add")
+                .accept(MediaType.APPLICATION_JSON)
+                .content(errorReq)
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult result = mvc.perform(request).andReturn();
+        assertEquals(400,result.getResponse().getStatus());
+
+    }
+
 }
