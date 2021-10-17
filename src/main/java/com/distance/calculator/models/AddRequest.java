@@ -1,14 +1,13 @@
-package com.distance.calculator;
+package com.distance.calculator.models;
 
-import com.distance.calculator.models.Distance;
-import com.distance.calculator.models.Units;
+import com.distance.calculator.service.UnitConverter;
 
 //Request structure for Adding distances
 
 public class AddRequest {
 
     private Distance[] distances;
-    private Units resultUnit;
+    private UnitConverter.UNIT resultUnit;
 
     public Distance[] getDistances() {
         return distances;
@@ -18,11 +17,11 @@ public class AddRequest {
         this.distances = distances;
     }
 
-    public Units getResultUnit() {
+    public UnitConverter.UNIT getResultUnit() {
         return resultUnit;
     }
 
-    public void setResultUnit(Units resultUnit) {
+    public void setResultUnit(UnitConverter.UNIT resultUnit) {
         this.resultUnit = resultUnit;
     }
 }

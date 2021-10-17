@@ -1,7 +1,8 @@
 package com.distance.calculator;
 
+import com.distance.calculator.models.AddRequest;
 import com.distance.calculator.models.Distance;
-import com.distance.calculator.models.Units;
+import com.distance.calculator.service.UnitConverter;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,15 @@ public class CalculatorController {
 
     @PostMapping("/add")
     public Distance add(@RequestBody AddRequest request){
-        Distance result = new Distance(3.0, Units.METER);
+
+        Double totalDistance = 0.0;
+        Distance[] distances = request.getDistances();
+
+        for(Distance distance: distances){
+            totalDistance += UnitConverter.convert(distance.getValue(),distance.getUnit(),request.getResultUnit());
+        }
+
+        Distance result = new Distance(totalDistance, request.getResultUnit());
         return result;
     }
 
