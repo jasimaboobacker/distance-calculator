@@ -28,3 +28,10 @@ Response
 }
 
 After the implementation of the service , i will use Junit for creating unittests 
+
+
+Rest api details availabel on http://localhost:8080/swagger-ui.html
+
+![swagger](https://user-images.githubusercontent.com/4347307/137624402-b43db3cf-a5fe-45c9-8c45-bfcbc3907ea0.jpg)
+
+
